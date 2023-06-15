@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnProd = new Button();
             btnCustomer = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnProd);
             panel1.Controls.Add(btnCustomer);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
@@ -42,9 +44,18 @@
             panel1.Size = new Size(200, 450);
             panel1.TabIndex = 0;
             // 
+            // btnProd
+            // 
+            btnProd.Location = new Point(0, 386);
+            btnProd.Name = "btnProd";
+            btnProd.Size = new Size(197, 23);
+            btnProd.TabIndex = 1;
+            btnProd.Text = "Product Info";
+            btnProd.UseVisualStyleBackColor = true;
+            // 
             // btnCustomer
             // 
-            btnCustomer.Location = new Point(0, 54);
+            btnCustomer.Location = new Point(0, 415);
             btnCustomer.Name = "btnCustomer";
             btnCustomer.Size = new Size(197, 23);
             btnCustomer.TabIndex = 0;
@@ -68,5 +79,6 @@
 
         private Panel panel1;
         private Button btnCustomer;
+        private Button btnProd;
     }
 }

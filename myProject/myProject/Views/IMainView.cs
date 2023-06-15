@@ -9,7 +9,7 @@ namespace myProject.Views
     public interface IMainView
     {
         event EventHandler ShowCustomerView;
-        event EventHandler ShowBalanceView;
+        event EventHandler ShowProductView;
         event EventHandler ShowOrderItemView;
     }
 }

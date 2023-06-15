@@ -34,3 +34,4 @@ C:\Users\chris\OneDrive\Desktop\Programming\myProject\myProject\obj\Debug\net6.0
 C:\Users\chris\OneDrive\Desktop\Programming\myProject\myProject\obj\Debug\net6.0-windows\myProject.genruntimeconfig.cache
 C:\Users\chris\OneDrive\Desktop\Programming\myProject\myProject\obj\Debug\net6.0-windows\ref\myProject.dll
 C:\Users\chris\OneDrive\Desktop\Programming\myProject\myProject\obj\Debug\net6.0-windows\myProject.Views.MainView.resources
+C:\Users\chris\OneDrive\Desktop\Programming\myProject\myProject\obj\Debug\net6.0-windows\myProject.Views.ProductView.resources

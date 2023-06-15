@@ -1,11 +1,11 @@
-﻿using myProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using myProject.Views;
-
+using System.Data.SqlClient;
+using myProject.Models.Customer;
 
 namespace myProject.Pesenters
 {
@@ -61,30 +61,22 @@ namespace myProject.Pesenters
         private void SaveCustomer(object? sender, EventArgs e)
         {
             var model = new CustomerModel();
+            model.Id = Convert.ToInt32(view.CustomerID);
             model.Name = view.CustomerName;
             model.Email = view.Email;
             model.Phone = view.PhoneNumber;
             try
             {
-                if (!string.IsNullOrEmpty(view.CustomerID) && int.TryParse(view.CustomerID, out int id))
-                {
-                    model.Id = id;
-                }
-                else
-                {
-                    model.Id = 0; // Set a default value or handle the case when CustomerID is not provided
-                }
-
                 new Common.ModelDataValidation().Validate(model);
-                if (view.IsEdit) // Edit model
+                if (view.IsEdit)//Edit model
                 {
                     repository.Edit(model);
-                    view.Message = "Pet edited successfully";
+                    view.Message = "Customer edited successfuly";
                 }
-                else // Add new model
+                else //Add new model
                 {
                     repository.Add(model);
-                    view.Message = "Pet added successfully";
+                    view.Message = "Customer added sucessfully";
                 }
                 view.IsSuccessful = true;
                 LoadAllCustomerList();
@@ -92,11 +84,12 @@ namespace myProject.Pesenters
             }
             catch (Exception ex)
             {
+                // Handle the exception and display an error message
                 view.IsSuccessful = false;
-                view.Message = ex.Message;
+                view.Message = "An error occurred: " + ex.Message;
+                Console.WriteLine("An error occurred during the add operation: " + ex.Message);
             }
         }
-
 
         private void CleanviewFields()
         {
@@ -110,18 +103,33 @@ namespace myProject.Pesenters
         {
             try
             {
-                var pet = (CustomerModel)customerBindingSource.Current;
-                repository.Delete(pet.Id);
+                var customer = (CustomerModel)customerBindingSource.Current;
+                repository.Delete(customer.Id);
                 view.IsSuccessful = true;
                 view.Message = "Customer deleted successfully";
                 LoadAllCustomerList();
             }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 547) // SQL Server error number for foreign key constraint violation
+                {
+                    view.IsSuccessful = false;
+                    view.Message = "Unable to delete the customer. This customer has a history of orders and cannot be deleted.";
+                }
+                else
+                {
+                    // Handle other database exceptions or rethrow the exception
+                    // with the original error message for general error handling.
+                    throw;
+                }
+            }
             catch (Exception ex)
             {
-                view.IsSuccessful = false;
-                view.Message = "An error ocurred, could not delete customer";
+                // Handle other exceptions or rethrow for general error handling.
+                throw;
             }
         }
+
 
         private void LoadSelectedCustomerToEdit(object? sender, EventArgs e)
         {

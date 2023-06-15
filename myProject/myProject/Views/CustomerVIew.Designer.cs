@@ -32,7 +32,7 @@
             panel1 = new Panel();
             btnClose = new Button();
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            tabPageCustomerList = new TabPage();
             btnDelete = new Button();
             btnEdit = new Button();
             btnAdd = new Button();
@@ -40,7 +40,7 @@
             txtSearch = new TextBox();
             dataGridView1 = new DataGridView();
             label2 = new Label();
-            tabPage2 = new TabPage();
+            tabPageCustomerDetails = new TabPage();
             txtPhone = new TextBox();
             txtemail = new TextBox();
             txtName = new TextBox();
@@ -53,9 +53,9 @@
             btnSave = new Button();
             panel1.SuspendLayout();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabPageCustomerList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            tabPage2.SuspendLayout();
+            tabPageCustomerDetails.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -92,8 +92,8 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPageCustomerList);
+            tabControl1.Controls.Add(tabPageCustomerDetails);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 47);
             tabControl1.Name = "tabControl1";
@@ -101,22 +101,22 @@
             tabControl1.Size = new Size(800, 403);
             tabControl1.TabIndex = 2;
             // 
-            // tabPage1
+            // tabPageCustomerList
             // 
-            tabPage1.Controls.Add(btnDelete);
-            tabPage1.Controls.Add(btnEdit);
-            tabPage1.Controls.Add(btnAdd);
-            tabPage1.Controls.Add(btnSearch);
-            tabPage1.Controls.Add(txtSearch);
-            tabPage1.Controls.Add(dataGridView1);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 375);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Customer List";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabPageCustomerList.Controls.Add(btnDelete);
+            tabPageCustomerList.Controls.Add(btnEdit);
+            tabPageCustomerList.Controls.Add(btnAdd);
+            tabPageCustomerList.Controls.Add(btnSearch);
+            tabPageCustomerList.Controls.Add(txtSearch);
+            tabPageCustomerList.Controls.Add(dataGridView1);
+            tabPageCustomerList.Controls.Add(label2);
+            tabPageCustomerList.Location = new Point(4, 24);
+            tabPageCustomerList.Name = "tabPageCustomerList";
+            tabPageCustomerList.Padding = new Padding(3);
+            tabPageCustomerList.Size = new Size(792, 375);
+            tabPageCustomerList.TabIndex = 0;
+            tabPageCustomerList.Text = "Customer List";
+            tabPageCustomerList.UseVisualStyleBackColor = true;
             // 
             // btnDelete
             // 
@@ -169,10 +169,12 @@
             // dataGridView1
             // 
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(20, 56);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(683, 311);
             dataGridView1.TabIndex = 1;
             // 
@@ -187,25 +189,25 @@
             label2.Text = "Search:";
             label2.Click += label2_Click;
             // 
-            // tabPage2
+            // tabPageCustomerDetails
             // 
-            tabPage2.Controls.Add(txtPhone);
-            tabPage2.Controls.Add(txtemail);
-            tabPage2.Controls.Add(txtName);
-            tabPage2.Controls.Add(txtID);
-            tabPage2.Controls.Add(label6);
-            tabPage2.Controls.Add(label5);
-            tabPage2.Controls.Add(label4);
-            tabPage2.Controls.Add(label3);
-            tabPage2.Controls.Add(btnCancel);
-            tabPage2.Controls.Add(btnSave);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(792, 375);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Customer Details";
-            tabPage2.UseVisualStyleBackColor = true;
+            tabPageCustomerDetails.Controls.Add(txtPhone);
+            tabPageCustomerDetails.Controls.Add(txtemail);
+            tabPageCustomerDetails.Controls.Add(txtName);
+            tabPageCustomerDetails.Controls.Add(txtID);
+            tabPageCustomerDetails.Controls.Add(label6);
+            tabPageCustomerDetails.Controls.Add(label5);
+            tabPageCustomerDetails.Controls.Add(label4);
+            tabPageCustomerDetails.Controls.Add(label3);
+            tabPageCustomerDetails.Controls.Add(btnCancel);
+            tabPageCustomerDetails.Controls.Add(btnSave);
+            tabPageCustomerDetails.Location = new Point(4, 24);
+            tabPageCustomerDetails.Name = "tabPageCustomerDetails";
+            tabPageCustomerDetails.Padding = new Padding(3);
+            tabPageCustomerDetails.Size = new Size(792, 375);
+            tabPageCustomerDetails.TabIndex = 1;
+            tabPageCustomerDetails.Text = "Customer Details";
+            tabPageCustomerDetails.UseVisualStyleBackColor = true;
             // 
             // txtPhone
             // 
@@ -233,8 +235,10 @@
             // 
             txtID.Location = new Point(51, 44);
             txtID.Name = "txtID";
+            txtID.ReadOnly = true;
             txtID.Size = new Size(76, 23);
             txtID.TabIndex = 6;
+            txtID.Text = "0";
             // 
             // label6
             // 
@@ -302,11 +306,11 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            tabPageCustomerList.ResumeLayout(false);
+            tabPageCustomerList.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
+            tabPageCustomerDetails.ResumeLayout(false);
+            tabPageCustomerDetails.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -315,11 +319,11 @@
         private Label label1;
         private Panel panel1;
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage tabPageCustomerList;
         private TextBox txtSearch;
         private DataGridView dataGridView1;
         private Label label2;
-        private TabPage tabPage2;
+        private TabPage tabPageCustomerDetails;
         private Button btnDelete;
         private Button btnEdit;
         private Button btnAdd;

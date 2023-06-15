@@ -16,10 +16,11 @@ namespace myProject.Views
         {
             InitializeComponent();
             btnCustomer.Click += delegate { ShowCustomerView?.Invoke(this, EventArgs.Empty); };
+            btnProd.Click += delegate { ShowProductView?.Invoke(this, EventArgs.Empty); };
         }
 
         public event EventHandler ShowCustomerView;
-        public event EventHandler ShowBalanceView;
+        public event EventHandler ShowProductView;
         public event EventHandler ShowOrderItemView;
     }
 }

@@ -1,4 +1,5 @@
-﻿using myProject.Models;
+﻿using myProject.Models.Customer;
+using myProject.Models.Product;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,9 +27,23 @@ namespace myProject.Views
         {
             InitializeComponent();
             AssociateAndRaiseViewEvents();
-            tabControl1.TabPages.Remove(tabPage2);
+            tabControl1.TabPages.Remove(tabPageCustomerDetails);
             btnClose.Click += delegate { this.Close(); };
+            // Application.ThreadException += Application_ThreadException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
         }
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            // Display the exception details
+            MessageBox.Show($"An unhandled exception occurred: {e.ExceptionObject}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /*private void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            // Display the exception details
+            MessageBox.Show($"An error occurred: {e.Exception.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }*/
 
         private void AssociateAndRaiseViewEvents()
         {
@@ -42,17 +58,17 @@ namespace myProject.Views
             btnAdd.Click += delegate
             {
                 AddNewEvent?.Invoke(this, EventArgs.Empty);
-                tabControl1.TabPages.Remove(tabPage1);
-                tabControl1.TabPages.Add(tabPage2);
-                tabPage2.Text = "Add new pet";
+                tabControl1.TabPages.Remove(tabPageCustomerList);
+                tabControl1.TabPages.Add(tabPageCustomerDetails);
+                tabPageCustomerDetails.Text = "Add new pet";
             };
             //Edit
             btnEdit.Click += delegate
             {
                 EditEvent?.Invoke(this, EventArgs.Empty);
-                tabControl1.TabPages.Remove(tabPage1);
-                tabControl1.TabPages.Add(tabPage2);
-                tabPage2.Text = "Edit pet";
+                tabControl1.TabPages.Remove(tabPageCustomerList);
+                tabControl1.TabPages.Add(tabPageCustomerDetails);
+                tabPageCustomerDetails.Text = "Edit pet";
             };
             //Save changes
             btnSave.Click += delegate
@@ -60,8 +76,8 @@ namespace myProject.Views
                 SaveEvent?.Invoke(this, EventArgs.Empty);
                 if (isSuccessful)
                 {
-                    tabControl1.TabPages.Remove(tabPage2);
-                    tabControl1.TabPages.Add(tabPage1);
+                    tabControl1.TabPages.Remove(tabPageCustomerDetails);
+                    tabControl1.TabPages.Add(tabPageCustomerList);
                 }
                 MessageBox.Show(Message);
             };
@@ -69,8 +85,8 @@ namespace myProject.Views
             btnCancel.Click += delegate
             {
                 CancelEvent?.Invoke(this, EventArgs.Empty);
-                tabControl1.TabPages.Remove(tabPage2);
-                tabControl1.TabPages.Add(tabPage1);
+                tabControl1.TabPages.Remove(tabPageCustomerDetails);
+                tabControl1.TabPages.Add(tabPageCustomerList);
             };
             //Delete
             btnDelete.Click += delegate
@@ -115,10 +131,12 @@ namespace myProject.Views
             get { return isEdit; }
             set { isEdit = value; }
         }
+        private bool issSuccessful;
+
         public bool IsSuccessful
         {
-            get { return IsSuccessful; }
-            set { IsSuccessful = value; }
+            get { return issSuccessful; }
+            set { issSuccessful = value; }
         }
         public string Message
         {

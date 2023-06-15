@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using myProject.Models;
+using myProject.Models.Customer;
 
 namespace myProject._Repositories
 {
@@ -24,10 +24,10 @@ namespace myProject._Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "insert into Customervalues (@CustomerName, @Email, @PhoneNumber)";
-                command.Parameters.Add("@CustomerName", SqlDbType.NVarChar).Value = customerModel.Name;
-                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = customerModel.Email;
-                command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar).Value = customerModel.Phone;
+                command.CommandText = "INSERT INTO Customers (CustomerName, Email, PhoneNumber) VALUES (@name, @email, @phone)";
+                command.Parameters.Add("@name", SqlDbType.NVarChar).Value = customerModel.Name;
+                command.Parameters.Add("@email", SqlDbType.NVarChar).Value = customerModel.Email;
+                command.Parameters.Add("@phone", SqlDbType.NVarChar).Value = customerModel.Phone;
                 command.ExecuteNonQuery();
             }
         }
@@ -38,28 +38,30 @@ namespace myProject._Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "delete from Customer where CustomerID=@CustomerID";
-                command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = id;
+                command.CommandText = "delete from Customers where CustomerID=@Id";
+                command.Parameters.Add("@Id", SqlDbType.Int).Value = id;
                 command.ExecuteNonQuery();
             }
         }
-        public void Edit(CustomerModel customerModel)
+        public void Edit(CustomerModel model)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = @"update Pet 
-                                    set CustomerName=@CustomerName,Email= @Email,PhoneNumber= @PhoneNumber 
-                                    where CustomerID=@CustomerID";
-                command.Parameters.Add("@CustomerName", SqlDbType.NVarChar).Value = customerModel.Name;
-                command.Parameters.Add("@Email", SqlDbType.NVarChar).Value = customerModel.Email;
-                command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar).Value = customerModel.Phone;
-                command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerModel.Id;
+                command.CommandText = @"UPDATE Customers
+                        SET CustomerName = @name, Email = @email, PhoneNumber = @phone
+                        WHERE CustomerID = @id";
+                command.Parameters.AddWithValue("@name", model.Name);
+                command.Parameters.AddWithValue("@email", model.Email);
+                command.Parameters.AddWithValue("@phone", model.Phone);
+                command.Parameters.AddWithValue("@id", model.Id);
+
                 command.ExecuteNonQuery();
             }
         }
+
 
         public IEnumerable<CustomerModel> GetAll()
         {
@@ -69,7 +71,7 @@ namespace myProject._Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "Select *from Customers order by CustomerID desc";
+                command.CommandText = "SELECT * FROM Customers ORDER BY CustomerID DESC";
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -98,8 +100,8 @@ namespace myProject._Repositories
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = @"SELECT * FROM Customers
-                                WHERE CustomerID = @id OR TRIM(CustomerName) COLLATE SQL_Latin1_General_CP1_CI_AS LIKE @name + '%'
-                                ORDER BY CustomerID DESC";
+                        WHERE CustomerID = @id OR TRIM(CustomerName) COLLATE SQL_Latin1_General_CP1_CI_AS LIKE @name + '%'
+                        ORDER BY CustomerID DESC";
                 command.Parameters.Add("@id", SqlDbType.Int).Value = customerID;
                 command.Parameters.Add("@name", SqlDbType.NVarChar).Value = customerName;
 
